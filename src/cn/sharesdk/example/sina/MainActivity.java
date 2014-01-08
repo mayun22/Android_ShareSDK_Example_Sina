@@ -30,11 +30,19 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 
 
-/**ShareSDK 官网地址 ： http://www.sharesdk.cn </br>
-/1、这是用2.11版本的sharesdk，一定注意  </br>
-/2、如果要咨询客服，请加企业QQ 4006852216 </br>
-/3、咨询客服时，请把问题描述清楚，最好附带错误信息截图 </br>
-/4、一般问题，集成文档中都有，请先看看集成文档；减少客服压力，多谢合作  ^_^
+/** 中文注释
+ * ShareSDK 官网地址 ： http://www.sharesdk.cn </br>
+ *1、这是用2.11版本的sharesdk，一定注意  </br>
+ *2、如果要咨询客服，请加企业QQ 4006852216 </br>
+ *3、咨询客服时，请把问题描述清楚，最好附带错误信息截图 </br>
+ *4、一般问题，集成文档中都有，请先看看集成文档；减少客服压力，多谢合作  ^_^</br></br></br>
+ *
+ *The password of demokey.keystore is 123456
+ **ShareSDK Official Website ： http://www.sharesdk.cn </br>
+ *1、Be carefully, this sample use the version of 2.11 sharesdk  </br>
+ *2、If you want to ask for help，please add our QQ whose number is 4006852216 </br>
+ *3、Please describe detail of the question , if you have the picture of the bugs or the bugs' log ,that is better </br>
+ *4、Usually, the answers of some normal questions is exist in our user guard pdf, please read it more carefully,thanks  ^_^
 */
 public class MainActivity extends Activity implements PlatformActionListener,Callback{
 
@@ -46,17 +54,28 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 	public static String TEST_IMAGE;
 	
 	/**ShareSDK集成方法有两种</br>
-	 * 1、第一种是引用方式，例如引用onekeyshare项目，onekeyshare项目在引用mainlibs库</br>
+	 * 1、第一种是引用方式，例如引用OneKeyShare项目，OneKeyShare项目在引用mainlibs库</br>
 	 * 2、第二种是把onekeyshare和mainlibs集成到项目中，本例子就是用第二种方式</br>
 	 * 请看“ShareSDK 使用说明文档”，SDK下载目录中 </br>
 	 * 或者看网络集成文档 http://wiki.sharesdk.cn/Android_%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97
 	 * 3、混淆时，把sample或者本例子的混淆代码copy过去，在proguard-project.txt文件中
 	 * 
-	 * 
 	 * 平台配置信息有三种方式：
 	 * 1、在我们后台配置各个微博平台的key
 	 * 2、在代码中配置各个微博平台的key，http://sharesdk.cn/androidDoc/cn/sharesdk/framework/ShareSDK.html
-	 * 3、在配置文件中配置，本例子里面的assets/ShareSDK.conf	 
+	 * 3、在配置文件中配置，本例子里面的assets/ShareSDK.xml,
+	 *
+	 *
+	 * There are two function to integrate ShareSDK 
+	 * 1、First, your project add the library of OneKeyShare, and the OneKeyShare library add the library of ShareSDK
+	 * 2、Second, putting all the source of ShareSDK and Onekeyshare into your project, which don't add library
+	 * 3、If you want to obfuscate project, you can reference this sample’s proguard-project file
+	 *
+	 * There are three function to configure Weibo APP KEY
+	 * 1、 Configuring each keys of microblogging platform in our background
+	 * 2、Configuring each keys of microblogging platform in your code
+	 * 3、Configuring each keys of microblogging platform in your project of assets/ShareSDK.xml file
+	 * 
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,52 +84,55 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 		//初始化ShareSDK
 		ShareSDK.initSDK(this);		
 	
-		/**新浪分享要注意的问题</br>
-		 * 1、新浪开发测试，需要测试账号；审核通过后，任何账号都可以用；
-		 *    否则会报错21321的错误，登陆失败
+		// 下面以新浪分享为例子
+		// the demo of below shows SinaWeibo share
+		/**
+		 * 新浪授权要注意的问题</br> 1、新浪开发测试，需要测试账号；审核通过后，任何账号都可以用； 否则会报错21321的错误，登陆失败
 		 * 
-		 *    我们的应用已经审核过了，可以用ShareSDK.conf的新浪平台的key做测试
-		 *    注册测试账号：新浪开放平台-你的应用中-应用信息-测试账号
-		 *    
-		 * 2、ShareSDK.conf中新浪配置信息包括AppKey，AppSecret，RedirectUrl
-		 *    前两个参数，你注册应用时，就可以得到；
-		 *    
-		 *    RedirectUrl是用于授权登陆用的，一定要与开放平台填写的一致，
-		 *    任何网址都行，如www.baidu.com;如果不一致或者不填写，就会报错，授权不成功，分享失败
-		 *    在新浪开放平台-你的应用-应用信息-高级信息-授权回调页，里面设置
-		 *   
+		 * 我们的应用已经审核过了，可以用ShareSDK.xml的新浪平台的key做测试 注册测试账号：新浪开放平台-你的应用中-应用信息-测试账号
+		 * 
+		 * 2、ShareSDK.xml中新浪配置信息包括AppKey，AppSecret，RedirectUrl
+		 * 前两个参数，你注册应用时，就可以得到；
+		 * 
+		 * RedirectUrl是用于授权登陆用的，一定要与开放平台填写的一致，
+		 * 任何网址都行，如www.baidu.com;如果不一致或者不填写，就会报错，授权不成功，分享失败
+		 * 在新浪开放平台-你的应用-应用信息-高级信息-授权回调页，里面设置
+		 * 
 		 * 3、新浪分享网络图片，需要申请高级权限；本地图片就可以直接分享
-		 *    权限申请：新浪开放平台-你的应用中-接口管理-权限申请-微博高级写入接口-statuses/upload_url_text
+		 * 权限申请：新浪开放平台-你的应用中-接口管理-权限申请-微博高级写入接口-statuses/upload_url_text
 		 * 
-		 * 4、一般问题，文档中都有写，请查看；也可以网络文档http://wiki.sharesdk.cn/Android_%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97
-		 *   跟客服联系的话，不要磨磨唧唧的，直接说问题，最好有错误信息截图，特别讨厌：在吗？在？ 这太浪费时间啦  ^_^
+		 * 4、一般问题，文档中都有写，请查看；也可以网络文档http://wiki.sharesdk.cn/Android_%E5%BF%AB%E9
+		 * %80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97
+		 * 跟客服联系的话，不要磨磨唧唧的，直接说问题，最好有错误信息截图，特别讨厌：在吗？在？ 这太浪费时间啦 ^_^
+		 * 
+		 * 
+		 * The Precautions of SinaWeibo authorization 1、SinaWeibo's development
+		 * and test, needing to apply test account, if the error logs contain
+		 * the error_code of 21321 2、Configuring SinaWeibo's AppKey、
+		 * AppSecret、RedirectUrl in the file of assets/ShareSDK.xml at your
+		 * project。</br> The param of RedirectUrl need to register in the
+		 * SinaWeibo Development Platform 3、SinaWeibo shares network picture,
+		 * you need to apply advanced permissions of statuses/upload_url_text in
+		 * the SinaWeibo Development Platform 4、 Usually, the answers of some
+		 * normal questions is exist in our user guard pdf, please read it
+		 * carefully,thanks! This is the network documentation :
+		 * http://wiki.sharesdk
+		 * .cn/Android_%E5%BF%AB%E9%80%9F%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97
 		 */
-		
 		Button button1 =(Button) findViewById(R.id.button1);
-		button1.setText("新浪快捷分享，有编辑界面");
+		button1.setText("SinaWeibo share which uses onekeyshare ");
 		button1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//快捷分享，没有九宫格，只有编辑页
 				OnekeyShare oks = new OnekeyShare();
-				
-				// 分享时Notification的图标和文字
 				oks.setNotification(R.drawable.ic_launcher, "Gtpass");
-				
-				//设置默认微博平台，例如腾讯微博的，可以是TencentWeibo.NAME
 				oks.setPlatform(SinaWeibo.NAME);
-				
-				//分享文本
-				oks.setText("ShareSDK测试能否分享");
-				
-				//分享本地图片，只能是sdcard中的图片地址
-				oks.setImagePath(TEST_IMAGE);
-				
+				oks.setText("ShareSDK share content");
+				oks.setImagePath(TEST_IMAGE);				
 				//分享网络图片，新浪分享网络图片，需要申请高级权限,否则会报10014的错误
 				//权限申请：新浪开放平台-你的应用中-接口管理-权限申请-微博高级写入接口-statuses/upload_url_text
 				//注意：本地图片和网络图片，同时设置时，只分享本地图片
-				//oks.setImageUrl("http://img.appgo.cn/imgs/sharesdk/content/2013/07/25/1374723172663.jpg");
-				
+				//oks.setImageUrl("http://img.appgo.cn/imgs/sharesdk/content/2013/07/25/1374723172663.jpg");				
 				oks.setSilent(false);
 				oks.show(MainActivity.this);				
 			}
@@ -118,14 +140,14 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 		
 		
 		Button button2 =(Button) findViewById(R.id.button2);
-		button2.setText("新浪直接图文分享网络图片，没有界面");
+		button2.setText("SinaWeibo share in background");
 		button2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//新浪直接分享
+				
 				SinaWeibo.ShareParams sp = new SinaWeibo.ShareParams();
 				//设置分享内容
-				sp.text = "ShareSDK测试标题";
+				sp.text = "ShareSDK share content";
 				//分享网络图片，新浪分享网络图片，需要申请高级权限,否则会报10014的错误
 				//权限申请：新浪开放平台-你的应用中-接口管理-权限申请-微博高级写入接口-statuses/upload_url_text
 				//注意：本地图片和网络图片，同时设置时，只分享本地图片
@@ -145,7 +167,7 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 		 * 删除九格宫不要的平台，只要删除对应平台的jar就行
 		 */				
 		Button button3 =(Button) findViewById(R.id.button3);
-		button3.setText("快捷分享，有九格宫和编辑界面");
+		button3.setText("Onekeyshare that includes editpage and nine grid palace");
 		button3.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {				
@@ -153,15 +175,15 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 				OnekeyShare oks = new OnekeyShare();
 
 				// 分享时Notification的图标和文字
-				oks.setNotification(R.drawable.ic_launcher, "ShareSDK 集成例子");
+				oks.setNotification(R.drawable.ic_launcher, "ShareSDK notification content");
 				// address是接收人地址，仅在信息和邮件使用
 				oks.setAddress("12345678901");
 				// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-				oks.setTitle("ShareSDK 例子标题title");
+				oks.setTitle("ShareSDK share title");
 				// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
 				oks.setTitleUrl("http://sharesdk.cn");
 				// text是分享文本，所有平台都需要这个字段
-				oks.setText("ShareSDK 例子文本text");
+				oks.setText("ShareSDK share content");
 				// imagePath是图片的本地路径，sdcard卡中图片地址
 				oks.setImagePath(MainActivity.TEST_IMAGE);
 				// imageUrl是图片的网络路径，新浪微博、人人网、微信
@@ -169,9 +191,9 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 				// url仅在微信（包括好友和朋友圈）中使用
 				oks.setUrl("http://sharesdk.cn");
 				// comment是我对这条分享的评论，仅在人人网和QQ空间使用
-				oks.setComment("人人分享需要的评论");
+				oks.setComment("comment");
 				// site是分享此内容的网站名称，仅在QQ空间使用
-				oks.setSite("qq空间分享的网站名称");
+				oks.setSite("web site name");
 				// siteUrl是分享此内容的网站地址，仅在QQ空间使用
 				oks.setSiteUrl("http://sharesdk.cn");
 				// latitude是维度数据，仅在新浪微博、腾讯微博和Foursquare使用
@@ -185,8 +207,6 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 			}
 		});
 		
-
-		//初始化本地图片，把图片从drawable复制到sdcard中
 		new Thread() {
 			public void run() {
 				initImagePath();
@@ -195,6 +215,7 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 	}
 
 	//把图片从drawable复制到sdcard中
+	//copy the picture from the drawable to sdcard
 	private void initImagePath() {
 		try {
 			if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
@@ -207,7 +228,7 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 			File file = new File(TEST_IMAGE);
 			if (!file.exists()) {
 				file.createNewFile();
-				Bitmap pic = BitmapFactory.decodeResource(getResources(), R.drawable.sina_pic);
+				Bitmap pic = BitmapFactory.decodeResource(getResources(), R.drawable.pic);
 				FileOutputStream fos = new FileOutputStream(file);
 				pic.compress(CompressFormat.JPEG, 100, fos);
 				fos.flush();
@@ -227,6 +248,8 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 
 	//设置监听http://sharesdk.cn/androidDoc/cn/sharesdk/framework/PlatformActionListener.html
     //监听是子线程，不能Toast，要用handler处理，不要犯这么二的错误
+	//Setting listener, http://sharesdk.cn/androidDoc/cn/sharesdk/framework/PlatformActionListener.html
+	//The listener is the child-thread that can not handle ui
 	@Override
 	public void onCancel(Platform platform, int action) {
 		Message msg = new Message();
@@ -269,11 +292,11 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 		break;
 		case MSG_ACTION_CCALLBACK: {
 			switch (msg.arg1) {
-				case 1: { // 成功
+				case 1: { // 成功, successful notification
 					showNotification(2000, getString(R.string.share_completed));
 				}
 				break;
-				case 2: { // 失败
+				case 2: { // 失败, fail notification
 					String expName = msg.obj.getClass().getSimpleName();
 					if ("WechatClientNotExistException".equals(expName)
 							|| "WechatTimelineNotSupportedException".equals(expName)) {
@@ -290,7 +313,7 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 					}
 				}
 				break;
-				case 3: { // 取消
+				case 3: { // 取消, cancel notification
 					showNotification(2000, getString(R.string.share_canceled));
 				}
 				break;
@@ -308,7 +331,7 @@ public class MainActivity extends Activity implements PlatformActionListener,Cal
 	return false;
 	}
 
-	// 在状态栏提示分享操作
+	// 在状态栏提示分享操作,the notification on the status bar
 	private void showNotification(long cancelTime, String text) {
 		try {
 			Context app = getApplicationContext();
